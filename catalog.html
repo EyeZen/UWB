@@ -18,9 +18,284 @@
     <link rel="stylesheet" href="catalog.css">
     <script src="components.js" defer></script>
 </head>
+<style>
+    .profiles {
+        --card-width: 360px;
+        /* border: 1px solid black; */
+        display: grid;
+        /* grid-template-columns: repeat(auto-fit, minmax(25%, 1fr)); */
+        /* grid-auto-columns: repeat(3, 1fr); */
+        grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
+        grid-auto-flow: row;
+        justify-items: center;
+        row-gap: 5em;
+
+        margin-inline: 30px;
+        margin-block: 50px;
+    }
+
+    .filters {
+        margin-inline: 104px;
+        margin-top: 40px;
+    }
+    .filters ul { display: flex; }
+    .filters__title { 
+        font-weight: 700; 
+        margin-bottom: 0.5em;
+    }
+    .filter {
+        border: 1px solid #A6A6A6;
+        border-radius: 8px;
+        padding: 0.25em 0.5em;
+        
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1em;
+
+        margin-right: 1em;
+        cursor: pointer;
+        user-select: none;
+    }
+    .filter__control {
+        color: #343434;
+        height: 0.8em;
+        aspect-ratio: 1;
+    }
+    .filter:active .filter__control {
+        transform: rotate(180deg);
+    }
+
+    .filter__experience {
+        color: var(--col-accent);
+    }
+
+    .header-component {
+        position: sticky;
+        top: 0;
+    }
+</style>
 <body>
-    <!-- <div data-component="header"></div> -->
-    <div data-component="card"></div>
+    <div data-component="header" class="header-component"></div>
+
+    <section class="filters">
+        <h1 class="filters__title">Filters</h1>
+        <ul>
+            <li class="filter">
+                <span class="filter__experience">> 5 years</span>
+                <img src="./assets/icons/close.svg" alt="exclude experience filter" class="filter__control">
+            </li>
+            <li class="filter">
+                <span>Availability</span>
+                <img src="./assets/icons/down-arrow.svg" alt="see options" class="filter__control">
+            </li>
+            <li class="filter">
+                <span>Specialization</span>
+                <img src="./assets/icons/down-arrow.svg" alt="see options" class="filter__control">
+            </li>
+            <li class="filter">
+                <span>Language</span>
+                <img src="./assets/icons/down-arrow.svg" alt="see options" class="filter__control">
+            </li>
+        </ul>
+    </section>
+
+    <main class="profiles">
+        <profile-card  data-img="./assets/card1.jpeg"></profile-card>
+        <profile-card  data-img="./assets/card2.png"></profile-card>
+        <profile-card  data-img="./assets/card3.png"></profile-card>
+        <profile-card  data-img="./assets/card1.jpeg"></profile-card>
+        <profile-card  data-img="./assets/card2.png"></profile-card>
+    </main>
+
+    <template id="card-template">
+        <style>
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                transition: 0.2s ease-in-out;
+            }
+            .card {
+                background-color: white;
+                /* --card-width: 360px; */
+                width: var(--card-width);
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+                border-radius: 20px;
+                overflow: hidden;
+                
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            /* .card {
+                width: 280px;
+                font-size: 0.7em;
+            } */
     
+            .profile-img {
+                width: 100%;
+                aspect-ratio: 6/5;
+                /* background: url(./assets/card3.png) no-repeat center center/cover; */
+            }
+            .profile-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+    
+            .bio { padding: 1em; }
+            .bio__name {
+                font-size: 1.5em;
+                font-weight: var(--w-bold);
+                color: var(--col-text-primary);
+            }
+            .bio__degree { font-weight: var(--w-light); }
+            .bio__description {
+                list-style-type: none;
+                margin-left: 1.2em;
+                font-size: 1.125em;
+                font-weight: var(--w-extra-bold);
+            }
+            .description__item {
+                margin-top: 1em;
+                display: flex;
+                /* align-items: baseline; */
+                gap: 0.5em;
+            }
+            .description__item span { color: var(--col-accent); }
+            .bio__about {
+                font-size: 1.125em;
+                padding-top: 1em;
+            }
+            .about__content { color: var(--col-text-secondary); }
+            .bio__more {
+                color: var(--col-accent);
+                cursor: pointer;
+                margin-left: auto;
+            }
+            .bio__more:hover {
+                text-decoration: underline;
+            }
+            .bio__book-btn {
+                background: none;
+                border: none;
+    
+                padding: 0.25em 0.5em;
+                margin-bottom: 1.8em;
+                color: white;
+                border-radius: 5px;
+                background-color: var(--col-accent);
+                text-align: center;
+                cursor: pointer;
+                font-size: 1.5em;
+                font-weight: var(--w-bold);    
+            }
+            .bio__book-btn:active {
+                opacity: 0.6;
+            }
+    
+            .icon {
+                width: 1.2em;
+                aspect-ratio: 1;
+            }
+            .icon-hat { background: url(./assets/icons/hat.svg) no-repeat center center/contain; }
+            .icon-star { background: url(./assets/icons/star.svg) no-repeat center center/contain; }
+            .icon-globe { background: url(./assets/icons/globe.svg) no-repeat center center/contain; }
+            .icon-calendar { background: url(./assets/icons/calender.svg) no-repeat center center/contain; }
+    
+            @media only screen and (max-width: 1280px) {
+                .card {
+                    --card-width: 300px;
+                    font-size: 0.8em;
+                }
+            }
+            @media only screen and (max-width: 900px) {
+                .card {
+                    --card-width: 260px;
+                    font-size: 0.7em;
+                }
+            }
+    
+        </style>
+    
+        <div class="card">
+            <div class="profile-img">
+                <img id="profile-img" src="./assets/card1.jpeg" alt="profile-image">
+            </div>
+    
+            <section class="bio">
+                <h2 class="bio__name"><slot name="name">Practitioner's Name</slot></h2>
+                <div class="bio__degree"><slot name="degree">Degree/Education</slot></div>
+    
+                <ul class="bio__description">
+                    <li class="description__item">
+                        <span class="icon icon-hat"></span>
+                        <span><slot name="specialization">Specialization</slot></span>
+                    </li>
+                    <li class="description__item">
+                        <span class="icon icon-star"></span>
+                        <span><slot name="experience"></slot>Experience</slot></span>
+                    </li>
+                    <li class="description__item">
+                        <span class="icon icon-globe"></span>
+                        <span><slot name="languages">Languages known</slot></span>
+                    </li>
+                    <li class="description__item">
+                        <span class="icon icon-calendar"></span>
+                        <span><slot name="availability">Availability</slot></span>
+                    </li>
+                </ul>
+    
+                <div class="bio__about">
+                    <span class="about__content">
+                        <slot name="about">A short description of Practitioner and their work.</slot>
+                    </span>
+                    <input type="checkbox" id="show-popup">
+                    <label for="show-popup" class="bio__more">read more</label for="show-popup">
+                    </div>
+                </section>
+    
+            <button class="bio__book-btn">Book now</button>
+        </div>
+    </template>
+
+    <script>
+        class Card extends HTMLElement {
+            constructor() {
+                super();
+                let template = document.getElementById('card-template')
+                let templateContent = template.content;
+
+                const shadowRoot = this.attachShadow({mode: 'open'});
+                shadowRoot.appendChild(templateContent.cloneNode(true));
+                this.showLess();
+                const img_url = this.dataset.img;
+                if(img_url) {
+                    this.setProfileImage(img_url);
+                }
+            }
+
+            showLess() {
+                const shadow = this.shadowRoot;
+                const aboutContent = shadow.querySelector('.about__content');
+
+                let aboutContentValue = aboutContent.textContent;
+                aboutContentValue = aboutContentValue.substring(0, 90);
+                aboutContentValue += '...';
+                aboutContent.textContent = aboutContentValue;
+            }
+            setProfileImage(img_url) {
+                const shadow = this.shadowRoot;
+                const profileImg = shadow.getElementById('profile-img');
+                profileImg.src = img_url;
+            }
+        }
+        customElements.define('profile-card', Card);
+
+        window.getComputedStyle(document.querySelector('body', null))
+    </script>
 </body>
 </html>

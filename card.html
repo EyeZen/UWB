@@ -1,159 +1,152 @@
-<style>
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<template id="card-template">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: 0.2s ease-in-out;
+        }
+        .card {
+            background-color: white;
+            /* --card-width: 360px; */
+            width: var(--card-width);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            overflow: hidden;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* .card {
+            width: 280px;
+            font-size: 0.7em;
+        } */
 
-:root {
-    /* --s-large: 24px; */
-    /* --s-medium: 18px; */
-    /* --s-small: 16px; */
+        .profile-img {
+            width: 100%;
+            aspect-ratio: 6/5;
+            /* background: url(./assets/card3.png) no-repeat center center/cover; */
+        }
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    --col-accent: #67B0D1;
-    --col-text-primary: #343434;
-    --col-text-secondary: #3D3D3D;
+        .bio { padding: 1em; }
+        .bio__name {
+            font-size: 1.5em;
+            font-weight: var(--w-bold);
+            color: var(--col-text-primary);
+        }
+        .bio__degree { font-weight: var(--w-light); }
+        .bio__description {
+            list-style-type: none;
+            margin-left: 1.2em;
+            font-size: 1.125em;
+            font-weight: var(--w-extra-bold);
+        }
+        .description__item {
+            margin-top: 1em;
+            display: flex;
+            /* align-items: baseline; */
+            gap: 0.5em;
+        }
+        .description__item span { color: var(--col-accent); }
+        .bio__about {
+            font-size: 1.125em;
+            padding-top: 1em;
+        }
+        .about__content { color: var(--col-text-secondary); }
+        .bio__more {
+            color: var(--col-accent);
+            cursor: pointer;
+            margin-left: auto;
+        }
+        .bio__more:hover {
+            text-decoration: underline;
+        }
+        .bio__book-btn {
+            background: none;
+            border: none;
 
-    --w-extra-bold: 700;
-    --w-bold: 600;
-    --w-normal: 400;
-    --w-light: 300;
-}
+            padding: 0.25em 0.5em;
+            margin-bottom: 1.8em;
+            color: white;
+            border-radius: 5px;
+            background-color: var(--col-accent);
+            text-align: center;
+            cursor: pointer;
+            font-size: 1.5em;
+            font-weight: var(--w-bold);    
+        }
+        .bio__book-btn:active {
+            opacity: 0.6;
+        }
 
-html, body {
-    /* height: 100%; */
-    /* font-size: var(--s-small); */
-    
-    font-family: 'Open Sans', sans-serif;
-    font-size: 8px;
-    font-weight: var(--w-normal);
-}
+        .icon {
+            width: 1.2em;
+            aspect-ratio: 1;
+        }
+        .icon-hat { background: url(./assets/icons/hat.svg) no-repeat center center/contain; }
+        .icon-star { background: url(./assets/icons/star.svg) no-repeat center center/contain; }
+        .icon-globe { background: url(./assets/icons/globe.svg) no-repeat center center/contain; }
+        .icon-calendar { background: url(./assets/icons/calender.svg) no-repeat center center/contain; }
 
-.card {
-    /* width: 360px; */
-    width: 200px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-    border-radius: 20px;
-    overflow: hidden;
+        @media only screen and (max-width: 1280px) {
+            .card {
+                --card-width: 300px;
+                font-size: 0.8em;
+            }
+        }
+        @media only screen and (max-width: 900px) {
+            .card {
+                --card-width: 260px;
+                font-size: 0.7em;
+            }
+        }
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    </style>
 
-.profile-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.bio { 
-    padding: 1em; 
-}
-.bio__name {
-    /* font-size: var(--s-large); */
-    font-size: 1.5em;
-    font-weight: var(--w-bold);
-    color: var(--col-text-primary);
-}
-.bio__degree {
-    /* font-size: var(--s-small); */
-    font-weight: var(--w-light);
-}
-.bio__description {
-    list-style-type: none;
-    /* font-size: var(--s-medium); */
-    font-size: 1.125em;
-    font-weight: var(--w-extra-bold);
-}
-.description__item {
-    margin-top: 1em;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5em;
-}
-.description__item span {
-    color: var(--col-accent);
-}
-.bio__about {
-    /* font-size: var(--s-medium); */
-    font-size: 1.125em;
-    /* font-weight: var(--w-normal); */
-    padding-top: 1em;
-}
-.about__content {
-    color: var(--col-text-secondary);
-}
-.bio__more {
-    color: var(--col-accent);
-    cursor: pointer;
-}
-.bio__book-btn {
-    background: none;
-    border: none;
-
-    padding: 0.25em 0.5em;
-    margin-bottom: 1.8em;
-    color: white;
-    border-radius: 5px;
-    background-color: var(--col-accent);
-    text-align: center;
-    cursor: pointer;
-    /* font-size: var(--s-large); */
-    font-size: 1.5em;
-    font-weight: var(--w-bold);    
-}
-
-.iconify {
-    font-size: 1.2em;
-}
-
-</style>
-<div class="card">
-    <div class="profile-img">
-        <img src="./assets/card3.png" alt="profile-img">
-    </div>
-    <section class="bio">
-        <h2 class="bio__name">Dr. Poonam Joshi</h2>
-        <div class="bio__degree">M.Sc Psyhcology</div>
-        <ul class="bio__description">
-            <li class="description__item">
-                <span class="iconify" data-icon="icon-park-outline:degree-hat"></span>
-                <span>Bipolar Disorder, Mood swings</span>
-            </li>
-            <li class="description__item">
-                <span class="iconify" data-icon="ant-design:star-outlined"></span>
-                <span>8 years of Experience</span>
-            </li>
-            <li class="description__item">
-                <span class="iconify" data-icon="bi:globe"></span>
-                <span>Hindi, Marathi</span>
-            </li>
-            <li class="description__item">
-                <span class="iconify" data-icon="bx:calendar"></span>
-                <span>Next availaible on Wed</span>
-            </li>
-        </ul>
-        <div class="bio__about">
-            <span class="about__content">
-                Anxiety, Relationships Sanya works with adolescents and adults. Her expertise is on working with anxiety, trauma, depression, and relationship issues. She believes in working in partnership with clients, utilizing their strengths to help them sort out their challenges and achieve their goals. She also knows how important it is to identify all aspects of an individuals life that impact their well-being including their physical health, support systems (family, friends), work or school environment, and faith/spirituality in this process. My hobbies include swimming, cycling and reading.
-            </span>
-            <span class="bio__more">read more</span>
+    <div class="card">
+        <div class="profile-img">
+            <img id="profile-img" src="./assets/card1.jpeg" alt="profile-image">
         </div>
-    </section>
-    <button class="bio__book-btn">Book now</button>
-</div>
 
-<!-- <script>
-    const aboutContent = document.querySelector('.about__content');
+        <section class="bio">
+            <h2 class="bio__name"><slot name="name">Practitioner's Name</slot></h2>
+            <div class="bio__degree"><slot name="degree">Degree/Education</slot></div>
 
-    let aboutContentValue = aboutContent.textContent;
-    aboutContentValue = aboutContentValue.substring(0, 75);
-    aboutContentValue += '...';
-    aboutContent.textContent = aboutContentValue;
+            <ul class="bio__description">
+                <li class="description__item">
+                    <span class="icon icon-hat"></span>
+                    <span><slot name="specialization">Specialization</slot></span>
+                </li>
+                <li class="description__item">
+                    <span class="icon icon-star"></span>
+                    <span><slot name="experience"></slot>Experience</slot></span>
+                </li>
+                <li class="description__item">
+                    <span class="icon icon-globe"></span>
+                    <span><slot name="languages">Languages known</slot></span>
+                </li>
+                <li class="description__item">
+                    <span class="icon icon-calendar"></span>
+                    <span><slot name="availability">Availability</slot></span>
+                </li>
+            </ul>
 
-    console.log('this here seems to have run');
+            <div class="bio__about">
+                <span class="about__content">
+                    <slot name="about">A short description of Practitioner and their work.</slot>
+                </span>
+                <span class="bio__more">read more</span>
+            </div>
+        </section>
 
-</script> -->
+        <button class="bio__book-btn">Book now</button>
+    </div>
+</template>
