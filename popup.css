@@ -44,15 +44,16 @@
 }
 
 .active .info span {
-    margin-top: 10px;
-    padding: 5px;
+    margin-top: 6px;
+    padding: 5px 0px 14px 0px;
     color: rgb(44, 191, 191);
 }
 
 .active h6 {
     font-family: sans-serif;
     font-weight: 400;
-    color: gray;
+    font-size: medium;
+    color: rgb(157, 156, 156);
 }
 
 .active h3 {
@@ -117,42 +118,43 @@
     }
 
     .active .info span {
-        margin-top: 3px;
-        padding: 2px;
+        margin-top: 9px;
+        padding: 7px 0px 0px 0px;
         font-size: small;
     }
 
-    .active h6 {
-        font-weight: 200;
-    }
 
-    .active h3 {
-        font-weight: 350;
-        font-size: 15px;
-        padding: 5px 0 0px 1px;
-    }
+.active h6 {
+    font-weight: 200;
+}
+
+.active h3 {
+    font-weight: 350;
+    font-size: 15px;
+    padding: 5px 0 0px 1px;
+}
 
 
-    .text {
-        font-size: 8px;
-        font-weight: 400;
-        padding: 7px;
-        width: 200px;
-        height: 213px;
-    }
+.text {
+    font-size: 8px;
+    font-weight: 400;
+    padding: 7px;
+    width: 200px;
+    height: 213px;
+}
 
-    .active .bt1 {
-        width: 75px;
-        font-size: small;
-        padding: 3px;
-        transform: translate(10px, 71px);
-    }
+.active .bt1 {
+    width: 75px;
+    font-size: small;
+    padding: 3px;
+    transform: translate(10px, 71px);
+}
 
-    .active .bt2 {
-        width: 75px;
-        font-size: small;
-        padding: 3px;
-        transform: translate(120px, 71px);
-    }
+.active .bt2 {
+    width: 75px;
+    font-size: small;
+    padding: 3px;
+    transform: translate(120px, 71px);
+}
 
 }
