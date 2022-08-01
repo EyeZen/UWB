@@ -1,0 +1,158 @@
+.profiles#blur.active {
+    filter: blur(20px);
+}
+
+#popup {
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    transition: 0.6s;
+    top: 40%;
+    left: 50%;
+    transform: translate(-51%, -51%);
+    width: 850px;
+    height: 600px;
+    padding: 10px;
+    box-shadow: 0px 5px 30px rgba(0, 0, 0, .40);
+    background-color: #fff;
+    font-family: sans-serif;
+    font-weight: 400;
+    border-radius: 10px;
+    justify-content: space-between;
+
+}
+
+#popup.active {
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+    top: 50%;
+}
+
+.active img {
+    width: 300px;
+    height: 300px;
+    padding: 5px;
+}
+
+.active .info {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+
+}
+
+.active .info span {
+    margin-top: 10px;
+    padding: 5px;
+    color: rgb(44, 191, 191);
+}
+
+.active h6 {
+    font-family: sans-serif;
+    font-weight: 400;
+    color: gray;
+}
+
+.active h3 {
+    font-family: sans-serif;
+    font-weight: 600;
+    padding: 10px 0 0px 1px;
+}
+
+.text {
+    font-size: medium;
+    font-weight: 400;
+    padding: 10px;
+    width: 525px;
+    height: 251px;
+
+
+}
+
+.active .bt1 {
+    padding: 10px;
+    width: 150px;
+    Background-color: rgb(44, 191, 191);
+    position: fixed;
+    transform: translate(309px, 262px);
+    border-radius: 5px;
+}
+
+.active .bt2 {
+    padding: 10px;
+    width: 150px;
+    Background-color: rgb(44, 191, 191);
+    position: fixed;
+    transform: translate(118px, 262px);
+    border-radius: 5px;
+}
+
+
+@media screen and (max-width: 400px) {
+
+    #popup {
+
+        width: 370px;
+        height: 340px;
+        padding: 10px;
+        box-shadow: 0px 5px 30px rgba(0, 0, 0, .40);
+        background-color: #fff;
+        font-family: sans-serif;
+        font-weight: 400;
+        border-radius: 10px;
+        justify-content: space-between;
+
+    }
+
+    .active img {
+        width: 100px;
+        height: 100px;
+        padding: 2px;
+    }
+
+    .active .info {
+        font-weight: 400;
+    }
+
+    .active .info span {
+        margin-top: 3px;
+        padding: 2px;
+        font-size: small;
+    }
+
+    .active h6 {
+        font-weight: 200;
+    }
+
+    .active h3 {
+        font-weight: 350;
+        font-size: 15px;
+        padding: 5px 0 0px 1px;
+    }
+
+
+    .text {
+        font-size: 8px;
+        font-weight: 400;
+        padding: 7px;
+        width: 200px;
+        height: 213px;
+    }
+
+    .active .bt1 {
+        width: 75px;
+        font-size: small;
+        padding: 3px;
+        transform: translate(10px, 71px);
+    }
+
+    .active .bt2 {
+        width: 75px;
+        font-size: small;
+        padding: 3px;
+        transform: translate(120px, 71px);
+    }
+
+}
