@@ -43,10 +43,14 @@
 
 }
 
-.active .info span {
+.active .info .info-item {
     margin-top: 6px;
     padding: 5px 0px 14px 0px;
     color: rgb(44, 191, 191);
+
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
 }
 
 .active h6 {
@@ -90,6 +94,28 @@
     border-radius: 5px;
 }
 
+.icon {
+    display: inline-flex;
+    width: 1.2em;
+    aspect-ratio: 1;
+}
+
+.icon-hat {
+    background: url(./assets/icons/hat.svg) no-repeat center center/contain;
+}
+
+.icon-star {
+    background: url(./assets/icons/star.svg) no-repeat center center/contain;
+}
+
+.icon-globe {
+    background: url(./assets/icons/globe.svg) no-repeat center center/contain;
+}
+
+.icon-calendar {
+    background: url(./assets/icons/calender.svg) no-repeat center center/contain;
+}
+
 
 @media screen and (max-width: 400px) {
 
@@ -117,44 +143,44 @@
         font-weight: 400;
     }
 
-    .active .info span {
+    .active .info .info-item {
         margin-top: 9px;
         padding: 7px 0px 0px 0px;
         font-size: small;
     }
 
 
-.active h6 {
-    font-weight: 200;
-}
+    .active h6 {
+        font-weight: 200;
+    }
 
-.active h3 {
-    font-weight: 350;
-    font-size: 15px;
-    padding: 5px 0 0px 1px;
-}
+    .active h3 {
+        font-weight: 350;
+        font-size: 15px;
+        padding: 5px 0 0px 1px;
+    }
 
 
-.text {
-    font-size: 8px;
-    font-weight: 400;
-    padding: 7px;
-    width: 200px;
-    height: 213px;
-}
+    .text {
+        font-size: 8px;
+        font-weight: 400;
+        padding: 7px;
+        width: 200px;
+        height: 213px;
+    }
 
-.active .bt1 {
-    width: 75px;
-    font-size: small;
-    padding: 3px;
-    transform: translate(10px, 71px);
-}
+    .active .bt1 {
+        width: 75px;
+        font-size: small;
+        padding: 3px;
+        transform: translate(10px, 71px);
+    }
 
-.active .bt2 {
-    width: 75px;
-    font-size: small;
-    padding: 3px;
-    transform: translate(120px, 71px);
-}
+    .active .bt2 {
+        width: 75px;
+        font-size: small;
+        padding: 3px;
+        transform: translate(120px, 71px);
+    }
 
 }
