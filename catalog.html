@@ -23,13 +23,8 @@
 <body>
     <div data-component="header" class="header-component"></div>
 
-    <main class="profiles" id="blur">
-        <profile-card data-img="./assets/card1.jpeg"></profile-card>
-        <profile-card data-img="./assets/card2.png"></profile-card>
-        <profile-card data-img="./assets/card3.png"></profile-card>
-        <profile-card data-img="./assets/card1.jpeg"></profile-card>
-        <profile-card data-img="./assets/card2.png"></profile-card>
-    </main>
+    <!-- cards list, initialized in 'cards.js' -->
+    <main class="profiles" id="blur"></main>
 
     <template id="card-template">
         <style>
@@ -46,6 +41,7 @@
                 background-color: white;
                 /* --card-width: 360px; */
                 width: var(--card-width);
+                /* height: 100%; */
                 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
                 border-radius: 20px;
                 overflow: hidden;
@@ -228,7 +224,7 @@
                         <slot name="about">A short description of Practitioner and their work.</slot>
                     </span>
                     <input type="checkbox" id="show-popup" hidden>
-                    <label for="show-popup" class="bio__more">read more</label for="show-popup">
+                    <label for="show-popup" onclick="change()" class="bio__more">read more</label for="show-popup">
                 </div>
             </section>
 
@@ -243,10 +239,22 @@
             <h3>Practitioner's Name</h3>
             <h6>Degree/Education</h6>
             <div class="info">
-                <span><span class="icon icon-hat"></span> Specialization</span> <br>
-                <span><span class="icon icon-star"></span> Experience </span> <br>
-                <span><span class="icon icon-calendar"></span>Availability</span>
-                <span>Languages known</span>
+                <div class="info-item">
+                    <span class="icon icon-hat"></span>
+                    <span> Specialization</span> <br>
+                </div>
+                <div class="info-item">
+                    <span class="icon icon-star"></span>
+                    <span> Experience </span> <br>
+                </div>
+                <div class="info-item">
+                    <span class="icon icon-calendar"></span>
+                    <span>Availability</span>
+                </div>
+                <div class="info-item">
+                    <span class="icon icon-globe"></span>
+                    <span>Languages known</span>
+                </div>
             </div>
         </div>
         <div class="r">
