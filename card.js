@@ -109,3 +109,33 @@ const cards = document.querySelector('.profiles');
 for(const practitioner of practionersData) {
     cards.innerHTML += getCard(practitioner);
 }
+
+window.addEventListener('load', (e) => {
+    const updateNavbar = event => {
+        const mobileMedia = window.matchMedia('(max-width:700px)');
+        const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        const header = document.querySelector('.header');
+        const [UP, DOWN] = [1, -1]
+        let direction = UP;
+        if(updateNavbar.prevScroll < scrollTop) direction = DOWN;
+        if(mobileMedia.matches) {
+            if(scrollTop < 40) {
+                if(direction == UP) window.scrollTo({top: 0});
+                else window.scrollTo({top: 50});
+                header.style.paddingBlock = 'var(--padd_v)';
+                header.style.height = 'initial';
+            } else {
+                header.style.paddingBlock = '0px';
+                // header.style.height = '40px';
+                header.style.height = `calc(${header.style.height} - 2*var(--padd_v))`;
+            }
+        } else {
+            header.style.paddingBlock = 'var(--padd_v)';
+            // header.style.height = '90px';
+        }
+        updateNavbar.prevScroll = scrollTop;
+    }
+    updateNavbar.prevScroll = 0;
+    window.onscroll = updateNavbar;
+    window.onresize = updateNavbar;
+})
