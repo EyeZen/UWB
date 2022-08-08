@@ -1,34 +1,5 @@
-class Card extends HTMLElement {
-    constructor() {
-        super();
-        let template = document.getElementById('card-template')
-        let templateContent = template.content;
-
-        const shadowRoot = this.attachShadow({mode: 'open'});
-        shadowRoot.appendChild(templateContent.cloneNode(true));
-        this.showLess();
-        const img_url = this.dataset.img;
-        if(img_url) {
-            this.setProfileImage(img_url);
-        }
-    }
-
-    showLess() {
-        const shadow = this.shadowRoot;
-        const aboutContent = shadow.querySelector('.about__content');
-
-        let aboutContentValue = aboutContent.textContent;
-        aboutContentValue = aboutContentValue.substring(0, 90);
-        aboutContentValue += '...';
-        aboutContent.textContent = aboutContentValue;
-    }
-    setProfileImage(img_url) {
-        const shadow = this.shadowRoot;
-        const profileImg = shadow.getElementById('profile-img');
-        profileImg.src = img_url;
-    }
-}
-customElements.define('profile-card', Card);
+import ProfileCard from './ProfileCard.js';
+import PopupDialog from './PopupDialog.js';
 
 // dummy data. To be replaced by data requested from server
 const practionersData = [
@@ -89,25 +60,11 @@ const practionersData = [
     },
 ]
 
-
-function getCard(practitioner) {
-    const card = `
-        <profile-card data-img="${      practitioner.img}">
-        <span slot="name">${            practitioner.name           }</span>
-        <span slot="degree">${          practitioner.degree         }</span>
-        <span slot="specialization">${  practitioner.specialization }</span>
-        <span slot="experience">${      practitioner.experience     } years of experience</span>
-        <span slot="languages">${       practitioner.languages.join(', ')      }</span>
-        <span slot="availability">Next available on ${    practitioner.availability   }</span>
-        <span slot="about">${           practitioner.about          }</span>
-        </profile-card>
-    `
-    return card;
-}
-
 const cards = document.querySelector('.profiles');
 for(const practitioner of practionersData) {
-    cards.innerHTML += getCard(practitioner);
+    // cards.innerHTML += ProfileCard.createCard(practitioner);
+    const profile_card = new ProfileCard(practitioner);
+    cards.appendChild(profile_card);
 }
 
 window.addEventListener('load', (e) => {
