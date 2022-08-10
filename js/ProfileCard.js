@@ -1,10 +1,15 @@
 const _card_content = `
-<style>
-@import url(css/ProfileCard.css);
-</style>
 <div class="card">
     <div class="profile-img">
         <img id="profile-img" src="./assets/card1.jpeg" alt="profile-image">
+    </div>
+
+    <div class="specializations-wrapper">
+        <section class="specializations">
+            <div>Clinical Depression</div>
+            <div>Dream Analysis</div>
+            <div>Clinical Depression</div>
+        </section>
     </div>
 
     <section class="bio">
@@ -59,12 +64,13 @@ import PopupDialog from './PopupDialog.js';
 export default class ProfileCard extends HTMLElement {
     constructor(data) {
         super();        
-        this.attachShadow({ mode: 'open' });        
-        const template = document.createElement('template');
-        template.innerHTML = _card_content;
+        // this.attachShadow({ mode: 'open' });
+        // const template = document.createElement('template');
+        // template.innerHTML = _card_content;
+        const template = document.getElementById('card-template');
 
-        const shadow = this.shadowRoot;
-        shadow.append(template.content.cloneNode(true));
+        // const this = this.shadowRoot;
+        this.append(template.content.cloneNode(true));
 
         this.data = {
             name: "Practitioner's name",
@@ -87,15 +93,15 @@ export default class ProfileCard extends HTMLElement {
     }
 
     connectedCallback() {
-        const shadow = this.shadowRoot;
-        const profile_img = shadow.getElementById('profile-img');
-        const name = shadow.getElementById('name');
-        const degree = shadow.getElementById('degree');
-        const specialization = shadow.getElementById('specialization');
-        const experience = shadow.getElementById('experience');
-        const languages = shadow.getElementById('languages');
-        const availability = shadow.getElementById('availability');
-        const about = shadow.getElementById('about');
+        // const this = this.shadowRoot;
+        const profile_img = this.querySelector('#profile-img');
+        const name = this.querySelector('#name');
+        const degree = this.querySelector('#degree');
+        const specialization = this.querySelector('#specialization');
+        const experience = this.querySelector('#experience');
+        const languages = this.querySelector('#languages');
+        const availability = this.querySelector('#availability');
+        const about = this.querySelector('#about');
 
         
         profile_img.src = this.data.img;
@@ -107,7 +113,7 @@ export default class ProfileCard extends HTMLElement {
         availability.innerHTML = `Next available on ${this.data.availability}`;
         about.innerHTML = this.data.about.substring(0, 90) + '...';;
 
-        const bioMoreLink = shadow.querySelector('.bio__more');
+        const bioMoreLink = this.querySelector('.bio__more');
         bioMoreLink.addEventListener('click', (e) => {
             // console.log(this.data);
 

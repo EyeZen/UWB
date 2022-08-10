@@ -16,12 +16,72 @@
     <link rel="stylesheet" href="css/catalog.css">
     <link rel="stylesheet" href="css/ProfileCard.css">
 </head>
+<style>
+    #specialization {
+        font-size: 0.8em;
+    }
+</style>
 <body>
+    <popup-dialog></popup-dialog>
     <nav-bar></nav-bar>
     <main class="profiles" id="blur"></main>
 
+    <template id="card-template">
+        <div class="card">
+            <div class="profile-img">
+                <img id="profile-img" src="./assets/card1.jpeg" alt="profile-image">
+            </div>
+            <div class="specializations-wrapper">
+                <section class="specializations">
+                    <div>Clinical Depression</div>
+                    <div>Dream Analysis</div>
+                    <div>Clinical Depression</div>
+                </section>
+            </div>
+            <section class="bio">
+                <h2 class="bio__name" id="name">
+                    <slot name="name">Practitioner's Name</slot>
+                </h2>
+                <div class="bio__degree" id="degree">
+                    <slot name="degree">Degree/Education</slot>
+                </div>
+                <ul class="bio__description">
+                    <li class="description__item">
+                        <span class="icon icon-hat"></span>
+                        <span id="specialization">
+                            <slot name="specialization">Specialization</slot>
+                        </span>
+                    </li>
+                    <li class="description__item">
+                        <span class="icon icon-star"></span>
+                        <span id="experience">
+                            <slot name="experience">Experience</slot>
+                        </span>
+                    </li>
+                    <li class="description__item">
+                        <span class="icon icon-globe"></span>
+                        <span id="languages">
+                            <slot name="languages">Languages known</slot>
+                        </span>
+                    </li>
+                    <li class="description__item">
+                        <span class="icon icon-calendar"></span>
+                        <span id="availability">
+                            <slot name="availability">Availability</slot>
+                        </span>
+                    </li>
+                </ul>
+                <div class="bio__about">
+                    <span class="about__content" id="about">
+                        <slot name="about">A short description of Practitioner and their work.</slot>
+                    </span>
+                    <label for="show-popup" class="bio__more">read more</label for="show-popup">
+                </div>
+            </section>
+            <button class="bio__btn">Book now</button>
+        </div>
+    </template>
 
-    <popup-dialog></popup-dialog>
     <script type="module" src="js/catalog.js"></script>
     <script type="module" src="js/Navbar.js"></script>
 </body>

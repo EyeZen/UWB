@@ -1,11 +1,9 @@
 import ProfileCard from './ProfileCard.js';
 import PopupDialog from './PopupDialog.js';
 import ComponentSelector from './ComponentSelector.js';
-import ProfileCardShort from './ProfileCardShort.js';
-import ProfileCardHorizontal from './ProfileCardHorizontal.js';
-
 
 window.addEventListener('load', (e) => {
+    // responnsive navbar for @media (max-width: 700px)
     const updateNavbar = event => {
         const mobileMedia = window.matchMedia('(max-width:700px)');
         const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
@@ -33,6 +31,22 @@ window.addEventListener('load', (e) => {
     updateNavbar.prevScroll = 0;
     window.onscroll = updateNavbar;
     window.onresize = updateNavbar;
+
+    const profileCardsScan = () => {
+        const cards = document.querySelector('.profiles').children;
+
+        let maxHeight = 0;
+        for(const card of cards) {
+            const dims = card.getBoundingClientRect();
+            if(dims.height > maxHeight) maxHeight = dims.height;
+        }
+        
+        for(const card of cards) {
+            card.style.height = `${maxHeight}px`;
+            console.log(card.style.height);
+        }
+    }
+    // profileCardsScan();
 });
 
 // dummy data. To be replaced by data requested from server
@@ -94,22 +108,28 @@ const practionersData = [
     },
 ]
 
+// populate cards
 const cards = document.querySelector('.profiles');
 for(const practitioner of practionersData) {
-    // cards.innerHTML += ProfileCard.createCard(practitioner);
     const profile_card = new ProfileCard(practitioner);
     cards.appendChild(profile_card);
-
-    const profile_card_short = new ProfileCardShort(practitioner);
-    cards.appendChild(profile_card_short);
-    const profile_card_horizontal = new ProfileCardHorizontal(practitioner);
-    cards.appendChild(profile_card_horizontal);
 }
 
-const componentSelector = new ComponentSelector();
+// populate component-selector
+const componentSelector = new ComponentSelector(true);
 componentSelector.addElement('nav-bar', 'navbar');
 componentSelector.addElement('profile-card', 'cards');
-componentSelector.addElement('profile-card-short', 'short-cards');
-componentSelector.addElement('profile-card-horizontal', 'horizontal-cards');
+componentSelector.addElement('.specializations-wrapper', 
+    'specializations-horizontal', 
+    'specializations-horizontal', false);
+componentSelector.addElement('.bio__description > :first-child', 'specializations');
+componentSelector.addElement('.bio__description > :nth-child(2)', 'experience');
+componentSelector.addElement('.bio__description > :nth-child(3)', 'languages');
+componentSelector.addElement('.bio__description > :last-child', 
+    'availability',
+    'availability', false);
+componentSelector.addElement('.bio__about', 
+    'about',
+    'about', false);
 
 document.body.appendChild(componentSelector);

@@ -1,6 +1,6 @@
 const _popup_content = `
 <style>
-@import url(css/catalog.css);
+@import url(css/popup.css);
 </style>
 <div class="popup-wrapper hidden">
     <div class="popup">

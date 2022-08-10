@@ -114,7 +114,7 @@ const _component_selector = `
 export default class ComponentSelector extends HTMLElement {
     static switch_count = 0
     static switch_map = {}
-    constructor() {
+    constructor(opened=false) {
         super();
 
         this.attachShadow({mode: 'open'});
@@ -123,18 +123,18 @@ export default class ComponentSelector extends HTMLElement {
         const template = document.createElement('template');
         template.innerHTML = _selector_content;
 
-        shadow.appendChild(template.content.cloneNode(true));
-        shadow.getElementById('display-toggle').addEventListener('click', (event) => {
+        const toggleSelector = (event) => {
             const selector = shadow.querySelector('.component-selector');
             selector.classList.toggle('selector-hidden');
-            // if(event.target.checked === true && !selector.classList.contains('selector-hidden')) {
-            //     selector.classList.add('selector-hidden');
-            // } else {
-            //     selector.classList.remove('selector-hidden');
-            // }
-        });
+        };
+
+        shadow.appendChild(template.content.cloneNode(true));
+        const display_toggle = shadow.getElementById('display-toggle')
+        display_toggle.addEventListener('click', toggleSelector);
+
+        if(opened) display_toggle.click();
     }
-    updateElements(switch_id, checked, css_updates_class='hidden') {
+    updateElements(switch_id, checked, css_updates_class='utility__hidden') {
         // console.log('updated called on ', switch_id);
         const shadow = this.shadowRoot;
         for(const elem_selector of ComponentSelector.switch_map[switch_id]) {
@@ -150,7 +150,7 @@ export default class ComponentSelector extends HTMLElement {
             });
         }
     }
-    addElement(selector, switch_id, switch_name) {
+    addElement(selector, switch_id, switch_name, checked=true) {
         const shadow = this.shadowRoot;
         let component_switch = shadow.getElementById(switch_id);
 
@@ -175,6 +175,9 @@ export default class ComponentSelector extends HTMLElement {
         }
         ComponentSelector.switch_map[switch_id].push(selector);
         // console.log(ComponentSelector.switch_map);
+        if(!checked) {
+            component_switch.click();
+        }
     }
 }
 window.customElements.define('component-selector', ComponentSelector);
