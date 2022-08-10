@@ -1,34 +1,53 @@
-class Card extends HTMLElement {
-    constructor() {
-        super();
-        let template = document.getElementById('card-template')
-        let templateContent = template.content;
+import ProfileCard from './ProfileCard.js';
+import PopupDialog from './PopupDialog.js';
+import ComponentSelector from './ComponentSelector.js';
 
-        const shadowRoot = this.attachShadow({mode: 'open'});
-        shadowRoot.appendChild(templateContent.cloneNode(true));
-        this.showLess();
-        const img_url = this.dataset.img;
-        if(img_url) {
-            this.setProfileImage(img_url);
+window.addEventListener('load', (e) => {
+    // responnsive navbar for @media (max-width: 700px)
+    const updateNavbar = event => {
+        const mobileMedia = window.matchMedia('(max-width:700px)');
+        const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        const header = document.querySelector('.header');
+        const [UP, DOWN] = [1, -1]
+        let direction = UP;
+        if(updateNavbar.prevScroll < scrollTop) direction = DOWN;
+        if(mobileMedia.matches) {
+            if(scrollTop < 40) {
+                if(direction == UP) window.scrollTo({top: 0});
+                else window.scrollTo({top: 50});
+                header.style.paddingBlock = 'var(--padd_v)';
+                header.style.height = 'initial';
+            } else {
+                header.style.paddingBlock = '0px';
+                // header.style.height = '40px';
+                header.style.height = `calc(${header.style.height} - 2*var(--padd_v))`;
+            }
+        } else {
+            header.style.paddingBlock = 'var(--padd_v)';
+            // header.style.height = '90px';
+        }
+        updateNavbar.prevScroll = scrollTop;
+    }
+    updateNavbar.prevScroll = 0;
+    window.onscroll = updateNavbar;
+    window.onresize = updateNavbar;
+
+    const profileCardsScan = () => {
+        const cards = document.querySelector('.profiles').children;
+
+        let maxHeight = 0;
+        for(const card of cards) {
+            const dims = card.getBoundingClientRect();
+            if(dims.height > maxHeight) maxHeight = dims.height;
+        }
+        
+        for(const card of cards) {
+            card.style.height = `${maxHeight}px`;
+            console.log(card.style.height);
         }
     }
-
-    showLess() {
-        const shadow = this.shadowRoot;
-        const aboutContent = shadow.querySelector('.about__content');
-
-        let aboutContentValue = aboutContent.textContent;
-        aboutContentValue = aboutContentValue.substring(0, 90);
-        aboutContentValue += '...';
-        aboutContent.textContent = aboutContentValue;
-    }
-    setProfileImage(img_url) {
-        const shadow = this.shadowRoot;
-        const profileImg = shadow.getElementById('profile-img');
-        profileImg.src = img_url;
-    }
-}
-customElements.define('profile-card', Card);
+    // profileCardsScan();
+});
 
 // dummy data. To be replaced by data requested from server
 const practionersData = [
@@ -89,53 +108,28 @@ const practionersData = [
     },
 ]
 
-
-function getCard(practitioner) {
-    const card = `
-        <profile-card data-img="${      practitioner.img}">
-        <span slot="name">${            practitioner.name           }</span>
-        <span slot="degree">${          practitioner.degree         }</span>
-        <span slot="specialization">${  practitioner.specialization }</span>
-        <span slot="experience">${      practitioner.experience     } years of experience</span>
-        <span slot="languages">${       practitioner.languages.join(', ')      }</span>
-        <span slot="availability">Next available on ${    practitioner.availability   }</span>
-        <span slot="about">${           practitioner.about          }</span>
-        </profile-card>
-    `
-    return card;
-}
-
+// populate cards
 const cards = document.querySelector('.profiles');
 for(const practitioner of practionersData) {
-    cards.innerHTML += getCard(practitioner);
+    const profile_card = new ProfileCard(practitioner);
+    cards.appendChild(profile_card);
 }
 
-window.addEventListener('load', (e) => {
-    const updateNavbar = event => {
-        const mobileMedia = window.matchMedia('(max-width:700px)');
-        const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-        const header = document.querySelector('.header');
-        const [UP, DOWN] = [1, -1]
-        let direction = UP;
-        if(updateNavbar.prevScroll < scrollTop) direction = DOWN;
-        if(mobileMedia.matches) {
-            if(scrollTop < 40) {
-                if(direction == UP) window.scrollTo({top: 0});
-                else window.scrollTo({top: 50});
-                header.style.paddingBlock = 'var(--padd_v)';
-                header.style.height = 'initial';
-            } else {
-                header.style.paddingBlock = '0px';
-                // header.style.height = '40px';
-                header.style.height = `calc(${header.style.height} - 2*var(--padd_v))`;
-            }
-        } else {
-            header.style.paddingBlock = 'var(--padd_v)';
-            // header.style.height = '90px';
-        }
-        updateNavbar.prevScroll = scrollTop;
-    }
-    updateNavbar.prevScroll = 0;
-    window.onscroll = updateNavbar;
-    window.onresize = updateNavbar;
-})
+// populate component-selector
+const componentSelector = new ComponentSelector(true);
+componentSelector.addElement('nav-bar', 'navbar');
+componentSelector.addElement('profile-card', 'cards');
+componentSelector.addElement('.specializations-wrapper', 
+    'specializations-horizontal', 
+    'specializations-horizontal', false);
+componentSelector.addElement('.bio__description > :first-child', 'specializations');
+componentSelector.addElement('.bio__description > :nth-child(2)', 'experience');
+componentSelector.addElement('.bio__description > :nth-child(3)', 'languages');
+componentSelector.addElement('.bio__description > :last-child', 
+    'availability',
+    'availability', false);
+componentSelector.addElement('.bio__about', 
+    'about',
+    'about', false);
+
+document.body.appendChild(componentSelector);

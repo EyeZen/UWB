@@ -42,6 +42,13 @@ html, body {
     top: 0;
 }
 
+/* Profile-Card styles */
+@import url(./ProfileCard.css);
+
+/* popup styles */
+@import url(popup.css);
+
+/* media queries */
 @media only screen and (max-width: 1280px) {
     .profiles {
         --card-width: 300px;
@@ -59,4 +66,9 @@ html, body {
         --card-width: 250px;
         font-size: 0.7em;
     }
+}
+
+ /* component-selector utility class */
+.utility__hidden {
+    display: none !important;
 }

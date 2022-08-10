@@ -1,0 +1,113 @@
+@import url(ProfileCard.css);
+
+.popup-wrapper {
+    background: rgba(4, 4, 4, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    transition: 0s;
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.popup {
+    background-color: white;
+    /* width: 1045px; */
+    width: min(1045px, 80%);
+    /* height: 640px; */
+    height: min(640px,80%);
+    padding: 65px;  
+    font-size: 0.9em;
+
+    display: flex;
+    gap: 40px;
+    border-radius: 15px;
+}
+.popup > .bio {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    /* overflow-y: scroll; */
+}
+.popup > .aside {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.popup .bio__about {
+    flex: 1;
+    max-height: 50vh;
+    padding: 0;
+
+    overflow-y: scroll;
+}
+.popup .bio__btn {
+    margin: 0px;
+    margin-top: 10px;
+}
+.popup .bio__btns {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+.bio__btns > * {
+    width: 12ex;
+    height: 2em;
+}
+
+@media only screen and (max-width: 1280px) {
+    .popup {
+        font-size: 0.8em;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .popup {
+        flex-direction: column;
+        gap: 20px;
+        height: auto;
+        padding: 45px;
+    }
+    .popup .bio {
+        flex-direction: row;
+        gap: 20px;
+    }
+    .popup .profile-img { flex: 1; }
+    .popup .bio__info { 
+        flex: 1; 
+    }
+
+}
+
+@media only screen and (max-width: 700px) {
+    .popup {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+    .popup .bio {
+        flex-direction: column;
+    }
+    .popup .bio__description {
+        display: none;
+    }
+    .popup .bio__about {
+        max-height: 35vh;
+    }
+}
+
+/* popup utility classes */
+.active {
+    display: initial;
+}
+.hidden {
+    display: none;
+}
