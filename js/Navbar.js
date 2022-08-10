@@ -15,6 +15,7 @@ const _navbar_content = `
     --col-accent: #67B0D1;
 
     position: sticky;
+    z-index: 10;
     top: 0;    
     background-color: var(--col-accent);
     display: flex;

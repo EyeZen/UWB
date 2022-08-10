@@ -1,5 +1,39 @@
 import ProfileCard from './ProfileCard.js';
 import PopupDialog from './PopupDialog.js';
+import ComponentSelector from './ComponentSelector.js';
+import ProfileCardShort from './ProfileCardShort.js';
+import ProfileCardHorizontal from './ProfileCardHorizontal.js';
+
+
+window.addEventListener('load', (e) => {
+    const updateNavbar = event => {
+        const mobileMedia = window.matchMedia('(max-width:700px)');
+        const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        const header = document.querySelector('.header');
+        const [UP, DOWN] = [1, -1]
+        let direction = UP;
+        if(updateNavbar.prevScroll < scrollTop) direction = DOWN;
+        if(mobileMedia.matches) {
+            if(scrollTop < 40) {
+                if(direction == UP) window.scrollTo({top: 0});
+                else window.scrollTo({top: 50});
+                header.style.paddingBlock = 'var(--padd_v)';
+                header.style.height = 'initial';
+            } else {
+                header.style.paddingBlock = '0px';
+                // header.style.height = '40px';
+                header.style.height = `calc(${header.style.height} - 2*var(--padd_v))`;
+            }
+        } else {
+            header.style.paddingBlock = 'var(--padd_v)';
+            // header.style.height = '90px';
+        }
+        updateNavbar.prevScroll = scrollTop;
+    }
+    updateNavbar.prevScroll = 0;
+    window.onscroll = updateNavbar;
+    window.onresize = updateNavbar;
+});
 
 // dummy data. To be replaced by data requested from server
 const practionersData = [
@@ -65,34 +99,17 @@ for(const practitioner of practionersData) {
     // cards.innerHTML += ProfileCard.createCard(practitioner);
     const profile_card = new ProfileCard(practitioner);
     cards.appendChild(profile_card);
+
+    const profile_card_short = new ProfileCardShort(practitioner);
+    cards.appendChild(profile_card_short);
+    const profile_card_horizontal = new ProfileCardHorizontal(practitioner);
+    cards.appendChild(profile_card_horizontal);
 }
 
-window.addEventListener('load', (e) => {
-    const updateNavbar = event => {
-        const mobileMedia = window.matchMedia('(max-width:700px)');
-        const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-        const header = document.querySelector('.header');
-        const [UP, DOWN] = [1, -1]
-        let direction = UP;
-        if(updateNavbar.prevScroll < scrollTop) direction = DOWN;
-        if(mobileMedia.matches) {
-            if(scrollTop < 40) {
-                if(direction == UP) window.scrollTo({top: 0});
-                else window.scrollTo({top: 50});
-                header.style.paddingBlock = 'var(--padd_v)';
-                header.style.height = 'initial';
-            } else {
-                header.style.paddingBlock = '0px';
-                // header.style.height = '40px';
-                header.style.height = `calc(${header.style.height} - 2*var(--padd_v))`;
-            }
-        } else {
-            header.style.paddingBlock = 'var(--padd_v)';
-            // header.style.height = '90px';
-        }
-        updateNavbar.prevScroll = scrollTop;
-    }
-    updateNavbar.prevScroll = 0;
-    window.onscroll = updateNavbar;
-    window.onresize = updateNavbar;
-})
+const componentSelector = new ComponentSelector();
+componentSelector.addElement('nav-bar', 'navbar');
+componentSelector.addElement('profile-card', 'cards');
+componentSelector.addElement('profile-card-short', 'short-cards');
+componentSelector.addElement('profile-card-horizontal', 'horizontal-cards');
+
+document.body.appendChild(componentSelector);
